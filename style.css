@@ -180,6 +180,23 @@ section {
 .navbar a {
     font-size: 14px;
     font-weight: 400;
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--gold);
+    transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+    width: 100%;
 }
 
 .navbar a:hover {
@@ -188,6 +205,39 @@ section {
 
 .login-btn {
     padding: 8px 24px;
+}
+
+/* Menu Toggle */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 0;
+}
+
+.menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--gold);
+    transition: all 0.3s ease;
+}
+
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(9.5px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-9.5px) rotate(-45deg);
 }
 
 /* Hero Section */
@@ -475,6 +525,14 @@ section {
     display: flex;
     flex-direction: column;
     min-height: 400px;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+}
+
+.benefit-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(199, 154, 80, 0.6);
+    box-shadow: 0 12px 30px rgba(199, 154, 80, 0.08);
 }
 
 .bg-gold {
@@ -516,6 +574,21 @@ section {
     align-items: center;
     gap: 16px;
     font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    cursor: default;
+}
+
+.border-gold .skill-item:hover {
+    background: rgba(199, 154, 80, 0.1);
+    color: var(--text-white);
+    transform: translateX(6px);
+}
+
+.border-gold .skill-item:hover .skill-icon {
+    color: var(--text-white);
+    transform: scale(1.2);
 }
 
 .bg-gold .skill-item {
@@ -530,6 +603,7 @@ section {
     width: 28px;
     height: 28px;
     flex-shrink: 0;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .border-gold .skill-icon {
@@ -582,6 +656,15 @@ section {
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.tool-card:hover .tool-icon-wrapper {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.tool-card:hover .tool-name {
+    color: var(--gold);
 }
 
 .tool-logo {
@@ -621,8 +704,22 @@ section {
 }
 
 .project-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(199, 154, 80, 0.4);
+    transform: translateY(-10px);
+    border-color: rgba(199, 154, 80, 0.6);
+    box-shadow: 0 10px 30px rgba(199, 154, 80, 0.1);
+}
+
+.project-card:hover .project-icon {
+    color: var(--text-white);
+    transform: scale(1.1);
+}
+
+.project-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--gold);
+    opacity: 0.8;
+    transition: all 0.3s ease;
 }
 
 .project-image-placeholder {
@@ -1062,7 +1159,29 @@ section {
     }
 
     .navbar {
-        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(17, 17, 19, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        z-index: 1000;
+    }
+
+    .navbar.active {
+        right: 0;
+    }
+
+    .navbar a {
+        font-size: 24px;
+        font-family: var(--font-heading);
     }
 
     .section-title {
@@ -1079,11 +1198,16 @@ section {
     }
 
     .header-container {
-        justify-content: center;
+        justify-content: space-between;
+    }
+
+    .menu-toggle {
+        display: flex;
     }
 
     .login-btn {
         display: none;
+        /* Hide on mobile to keep header clean, maybe add it to navbar.active? */
     }
 
     .footer-top {
